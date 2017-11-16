@@ -14,13 +14,14 @@ public class FlightManagerTest {
     public void should_get_number_of_available_seats()
             throws Exception {
         //given
-        FlightManager flightManager = new FlightManagerBuilder("AA100").
+        FlightManager manager = new FlightManager();
+        manager.addFlight(new FlightBuilder("AA100").
                 withSeat(0, 33).
-                withSeat(0, 44).
-                build();
+                withSeat(1, 44).
+                build());
 
         //when
-        int seats = flightManager.getAvailableSeatsForFlight("AA100");
+        int seats = manager.getAvailableSeatsForFlight("AA100");
 
         //then
         assertEquals(2, seats);
@@ -28,24 +29,17 @@ public class FlightManagerTest {
 
     @Test
     public void should_fail_when_flight_not_found() throws Exception {
-        //given
-        FlightManager manager = new FlightManagerBuilder("AA100").
-                withSeat(0, 33).
-                withSeat(0, 44).
-                build();
-
-        //when/then
-        Assertions.assertThatExceptionOfType(NoFlightFoundException.class).isThrownBy(() -> manager.getAvailableSeatsForFlight("AA101"));
-
+        Assertions.assertThatExceptionOfType(NoFlightFoundException.class).isThrownBy(() -> new FlightManager().getAvailableSeatsForFlight("AA101"));
     }
 
     @Test
     public void should_get_cheapest_seat_on_flight() throws Exception {
         //given
-        FlightManager manager = new FlightManagerBuilder("AA100").
+        FlightManager manager = new FlightManager();
+        manager.addFlight(new FlightBuilder("AA100").
                 withSeat(0, 33).
-                withSeat(0, 44).
-                build();
+                withSeat(1, 44).
+                build());
 
         //when
         Integer cheapestSeat = manager.get_cheapest_seat_for_flight("AA100");
@@ -58,9 +52,10 @@ public class FlightManagerTest {
     @Test
     public void should_add_seats_to_flight() throws Exception {
         //given
-        FlightManager manager = new FlightManagerBuilder("AA100").
+        FlightManager manager = new FlightManager();
+        manager.addFlight(new FlightBuilder("AA100").
                 withSeat(0, 33).
-                build();
+                build());
 
         //when
         Set<Seat> seats = manager.getFlight("AA100").getSeats();
