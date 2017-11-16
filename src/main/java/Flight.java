@@ -28,6 +28,7 @@ public class Flight {
 
     public Flight(String flightNo) {
         this.flightNo = flightNo;
+        this.seats = new HashSet<>();
     }
 
     public void setSeats(Set<Seat> seats) {

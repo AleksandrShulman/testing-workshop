@@ -51,4 +51,13 @@ public class FlightManager {
             throw new NoFlightFoundException();
         }
     }
+
+    public Flight getFlight(String flightNo) {
+        Optional<Flight> matchedFlight = flights.stream().filter(f -> f.getFlightNo().equals(flightNo)).findFirst();
+        if (matchedFlight.isPresent()) {
+            return matchedFlight.get();
+        } else {
+            throw new NoFlightFoundException();
+        }
+    }
 }
